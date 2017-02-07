@@ -15,7 +15,6 @@ object GamesList {
 
     def joinGame(uuid: String)(e: ReactEventI) = {
         Callback {
-          println("joining:"+ uuid)
           Pong.getMainBackend.foreach(mb => mb.joinGame(uuid))
         }
     }

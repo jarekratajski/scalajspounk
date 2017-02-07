@@ -36,7 +36,7 @@ class ServerApi {
   def registerUser(login: String, pass: String): Future[RegisterResult] = {
     val data = NewUser(pass)
     val result = Promise[RegisterResult]
-    doAjax("/api/users/add/" + login, Some(write[NewUser](data)))
+    doAjax("/api/users/" + login, Some(write[NewUser](data)))
       .map(
         (response: String) => read[RegisterResult](response))
   }
@@ -46,7 +46,7 @@ class ServerApi {
   def loginUser(login: String, pass: String): Future[Option[Session]] = {
     val data = NewUser(pass)
     val result = Promise[Option[Session]]
-    doAjax("/api/users/login/" + login, Some(write[NewUser](data)))
+    doAjax("/api/sessions/" + login, Some(write[NewUser](data)))
         .map(
       (response: String) => {
         this.session= safePickle(response, read[Session](_))
@@ -104,7 +104,14 @@ class ServerApi {
     if (value == "null") {
       None
     } else {
-      Some(parser(value))
+      try {
+        Some(parser(value))
+      } catch {
+        case e:Exception =>{
+          println(s"unable to parse ${value} => ${e}")
+          None
+        }
+      }
     }
   }
 
