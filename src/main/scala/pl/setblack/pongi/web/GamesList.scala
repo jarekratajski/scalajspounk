@@ -30,7 +30,7 @@ object GamesList {
     def render(state: Seq[GameInfo]) = {
       <.section(
         ^.`class` := "games",
-        <.ul(state.map( game => <.li("join", game.name, ^.onClick ==> joinGame(game.uuid) ) ) ),
+        <.ul(state.map( game => <.li("join => ", game.name, ^.onClick ==> joinGame(game.uuid) ) ) ),
         <.p(<.input(^.name:="createdGame"), <.button("create", ^.onClick==>createGame))
       )
     }
