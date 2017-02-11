@@ -43,8 +43,9 @@ object Pong {
 
     def toGameList() = {
       server.listGames.onComplete(games => {
-        $.modState(ps => ps.toGamesList(games.get)).runNow()
-      })
+        server.getTopScore().onComplete( topScore => {
+          $.modState(ps => ps.toGamesList(games.get, topScore.get)).runNow()
+      })})
     }
 
     def movePlayer(gameId: String, player1Key: State, aplayer: Player) = {
@@ -73,9 +74,13 @@ object Pong {
 
     }
 
+    def refreshGameList() = {
 
+      $.state.map( ps => ps.games.foreach( gl => toGameList())).runNow()
+    }
 
     def refresh() = {
+
       $.state.map(
         ps => {
           ps.currentGame

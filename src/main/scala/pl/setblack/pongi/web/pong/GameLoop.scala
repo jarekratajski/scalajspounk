@@ -38,6 +38,11 @@ class GameLoop {
       //if  (!stopped) Pong.getMainBackend.foreach( pb => pb.refresh())
     }
 
+    js.timers.setInterval(5000) {
+
+      Pong.getMainBackend.foreach(_.refreshGameList())
+    }
+
   }
 
   def getCommand(playerActiveKeys: Set[KeyState.State]):KeyState.State = {

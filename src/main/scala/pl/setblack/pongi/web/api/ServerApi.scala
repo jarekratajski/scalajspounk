@@ -5,7 +5,7 @@ import org.scalajs.dom
 import scala.scalajs.js.annotation.JSExportAll
 import org.scalajs.jquery.{JQueryAjaxSettings, JQueryPromise, jQuery}
 import pl.setblack.pongi.web.Pong
-import pl.setblack.pongi.web.pong.GameState
+import pl.setblack.pongi.web.pong.{GameState, Score}
 import upickle.Js
 
 import scala.scalajs.js
@@ -125,6 +125,12 @@ class ServerApi {
     doAjax("/api/games/games")
       .map(str => read[Seq[GameInfo]](str))
   }
+
+  def getTopScore(): Future[Seq[Score]] = {
+    doAjax("/api/score/scores")
+      .map(str => read[Seq[Score]](str))
+  }
+
 
   private def doAjax(url: String, data: Option[String] = None, contentType: String = "application/json"): Future[String] = {
     val baseSettings = Map(

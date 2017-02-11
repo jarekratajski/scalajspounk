@@ -1,14 +1,14 @@
 package pl.setblack.pongi.web
 
 import pl.setblack.pongi.web.api.GameInfo
-import pl.setblack.pongi.web.pong.GameState
+import pl.setblack.pongi.web.pong.{GameState, Score}
 
 /**
   * Created by jarek on 1/22/17.
   */
 case class PongClientState(
                           welcome  : Option[Welcome.WelcomeState],
-                          games : Option[Seq[GameInfo]],
+                          games : Option[(Seq[GameInfo],Seq[Score])],
                           currentGame: Option[CurrentGameWrapper]
                           ) {
 
@@ -17,8 +17,8 @@ case class PongClientState(
   def this()  = this(Some(Welcome.WelcomeState()), None,None)
 
 
-  def toGamesList(games: Seq[GameInfo]): PongClientState = {
-    PongClientState(None, Some(games) , None)
+  def toGamesList(games: Seq[GameInfo], score: Seq[Score]): PongClientState = {
+    PongClientState(None, Some((games,score)) , None)
   }
 
   def toGame( uuid: String, gameState : GameState): PongClientState = {

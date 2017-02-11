@@ -5,13 +5,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import pl.setblack.pongi.web.api.GameInfo
 import org.scalajs.dom._
 import org.scalajs.dom.raw.HTMLInputElement
+import pl.setblack.pongi.web.pong.Score
 
 /**
   * Created by jarek on 1/22/17.
   */
 object GamesList {
 
-  class GamesListBackend($: BackendScope[Seq[GameInfo],Unit ]) {
+  class GamesListBackend($: BackendScope[(Seq[GameInfo],Seq[Score]),Unit] ) {
 
     def joinGame(uuid: String)(e: ReactEventI) = {
         Callback {
@@ -27,17 +28,18 @@ object GamesList {
       }
     }
 
-    def render(state: Seq[GameInfo]) = {
+    def render(state: (Seq[GameInfo],Seq[Score])) = {
       <.section(
         ^.`class` := "games",
-        <.ul(state.map( game => <.li("join => ", game.name, ^.onClick ==> joinGame(game.uuid) ) ) ),
+        <.ul(state._1.map( game => <.li("join => ", game.name, ^.onClick ==> joinGame(game.uuid) ) ) ),
+        <.ul(state._2.map( score => <.li( score.userId," " ,score.totalScore ) ) ),
         <.p(<.input(^.name:="createdGame"), <.button("create", ^.onClick==>createGame))
       )
     }
   }
 
 
-  val page = ReactComponentB[Seq[GameInfo]]("Games")
+  val page = ReactComponentB[(Seq[GameInfo],Seq[Score])]("Games")
       .backend(new GamesListBackend(_))
     .renderBackend
     .build
