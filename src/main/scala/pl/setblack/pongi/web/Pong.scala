@@ -76,7 +76,13 @@ object Pong {
 
     def refreshGameList() = {
 
-      $.state.map( ps => ps.games.foreach( gl => toGameList())).runNow()
+      $.state.map( ps => {
+        if ( ps.currentGame.isEmpty) {
+          println("refreshing games")
+          ps.games.foreach( gl => toGameList())
+        }
+
+      }).runNow()
     }
 
     def refresh() = {

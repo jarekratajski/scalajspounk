@@ -88,7 +88,7 @@ gulp.task('less', function () {
             paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./.tmp/styles'));
+        .pipe(gulp.dest(targetDir + '/styles'));
 });
 
 
