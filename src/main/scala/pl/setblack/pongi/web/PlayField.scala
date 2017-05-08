@@ -43,11 +43,11 @@ object PlayField {
     ReactComponentB[GameState]("Playfield")
       .render_P(game => <.section(
         ^.`class` := "playfield",
-        PlayerComponent(game.players._1),
-        PlayerComponent(game.players._2),
+        PlayerComponent(game.players.player1),
+        PlayerComponent(game.players.player2),
         BallComponent(game.ball),
-        ScoreComponent(PlayerScore(game.players._1.score, 1)),
-        ScoreComponent(PlayerScore(game.players._2.score, 2)))
+        ScoreComponent(PlayerScore(game.players.player1.score, 1)),
+        ScoreComponent(PlayerScore(game.players.player2.score, 2)))
       ).build
 
   val GameStateComponent = ReactComponentB[GameState]("GameState")

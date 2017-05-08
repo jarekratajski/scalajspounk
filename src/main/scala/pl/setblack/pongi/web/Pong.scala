@@ -68,8 +68,8 @@ object Pong {
           ps => ps.currentGame
             .foreach(
               game => {
-                movePlayer(game.uuid, player1Key, game.state.players._1)
-                movePlayer(game.uuid, player1Key, game.state.players._2)
+                movePlayer(game.uuid, player1Key, game.state.players.player1)
+                movePlayer(game.uuid, player1Key, game.state.players.player2)
               })).runNow()
 
     }

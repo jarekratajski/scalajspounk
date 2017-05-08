@@ -188,9 +188,13 @@ gulp.task('index', [ 'scripts'], function() {
         .pipe(_inject(gulp.src('vendor*.js', { cwd: targetDir }), 'vendor'))
         // inject app.js (build) or all js files indivually (dev)
         // inject scala.js
-        .pipe(_inject(gulp.src([fullJS ? 'scjs/'+appName+'-jsdeps.min.js' :
-            'scjs/'+appName+'-jsdeps.js' , fullJS ? 'scjs/'+appName+'-opt.js'
-            : 'scjs/'+appName+'-fastopt.js','scjs/'+appName+'-launcher.js'], { cwd: targetDir }), 'scalajs'))
+        .pipe(_inject(gulp.src(
+            [fullJS ?
+                'scjs/'+appName+'-jsdeps.min.js' :
+                'scjs/'+appName+'-jsdeps.js' ,
+            fullJS ? 'scjs/'+appName+'-opt.js'
+                        : 'scjs/'+appName+'-fastopt.js',
+                'scjs/'+appName+'-launcher.js'], { cwd: targetDir }), 'scalajs'))
         .pipe(plugins.if(build,
             _inject(gulp.src('scripts/app*.js', { cwd: targetDir }), 'app'),
             _inject(_getAllScriptSources(), 'app')
